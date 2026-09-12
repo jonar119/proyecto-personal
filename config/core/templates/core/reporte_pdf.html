@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        p {
+            margin: 4px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+        }
+        th {
+            background: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte de ingresos</h1>
+    <p><strong>Usuario:</strong> {{ usuario }}</p>
+    <p><strong>Fecha inicio:</strong> {{ fecha_inicio }}</p>
+    <p><strong>Fecha fin:</strong> {{ fecha_fin }}</p>
+    <p><strong>Tipo de reporte:</strong> {{ tipo_reporte|title }}</p>
+
+    <table>
+        <tr>
+            <th>Empresa</th>
+            <th>Empleado</th>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>Fecha ingreso</th>
+
+            {% if mostrar_costos and tipo_reporte == 'general' %}
+                <th>Nómina</th>
+                <th>Facturación</th>
+            {% elif mostrar_costos and tipo_reporte == 'nomina' %}
+                <th>Nómina</th>
+            {% elif mostrar_costos and tipo_reporte == 'facturacion' %}
+                <th>Facturación</th>
+            {% endif %}
+        </tr>
+
+        {% for ingreso in ingresos %}
+        <tr>
+            <td>{{ ingreso.empresa.nombre }}</td>
+            <td>{{ ingreso.empleado.nombre }}</td>
+            <td>{{ ingreso.nombre_completo }}</td>
+            <td>{{ ingreso.puesto }}</td>
+            <td>{{ ingreso.fecha_ingreso|date:"d/m/Y" }}</td>
+
+            {% if mostrar_costos and tipo_reporte == 'general' %}
+                <td>${{ ingreso.empresa.monto_nomina|floatformat:2 }}</td>
+                <td>${{ ingreso.empresa.monto_factura|floatformat:2 }}</td>
+            {% elif mostrar_costos and tipo_reporte == 'nomina' %}
+                <td>${{ ingreso.empresa.monto_nomina|floatformat:2 }}</td>
+            {% elif mostrar_costos and tipo_reporte == 'facturacion' %}
+                <td>${{ ingreso.empresa.monto_factura|floatformat:2 }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if mostrar_costos %}
+        {% if tipo_reporte == 'general' %}
+            <h2>Totales</h2>
+            <p><strong>Total de ingresos:</strong> {{ total_ingresos }}</p>
+            <p><strong>Total Nómina:</strong> ${{ total_nomina|floatformat:2 }}</p>
+            <p><strong>Total Facturación:</strong> ${{ total_factura|floatformat:2 }}</p>
+        {% elif tipo_reporte == 'nomina' %}
+            <h2>Total de Nómina</h2>
+            <p><strong>Total de ingresos:</strong> {{ total_ingresos }}</p>
+            <p><strong>Total Nómina:</strong> ${{ total_nomina|floatformat:2 }}</p>
+        {% elif tipo_reporte == 'facturacion' %}
+            <h2>Total de Facturación</h2>
+            <p><strong>Total de ingresos:</strong> {{ total_ingresos }}</p>
+            <p><strong>Total Facturación:</strong> ${{ total_factura|floatformat:2 }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

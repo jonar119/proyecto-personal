@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+    .dashboard-titulo {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #111;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .menu-card {
+        background: linear-gradient(135deg, #0aa38f, #087f70);
+        color: white;
+        text-decoration: none;
+        padding: 30px 20px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .menu-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+    }
+
+    .menu-card h3 {
+        margin-bottom: 10px;
+        font-size: 22px;
+    }
+
+    .menu-card p {
+        margin: 0;
+        font-size: 15px;
+        color: #eefdf9;
+    }
+</style>
+
+<h1 class="dashboard-titulo">Menú principal</h1>
+
+<div class="menu-grid">
+    <a href="{% url 'registrar_ingreso' %}" class="menu-card">
+        <h3>Registrar ingreso</h3>
+        <p>Captura nuevos ingresos en el sistema</p>
+    </a>
+
+    <a href="{% url 'lista_ingresos' %}" class="menu-card">
+        <h3>Lista de ingresos</h3>
+        <p>Consulta la lista general de ingresos</p>
+    </a>
+
+    <a href="{% url 'reportes' %}" class="menu-card">
+        <h3>Reportes</h3>
+        <p>Genera reportes PDF de nómina y facturación</p>
+    </a>
+
+    <a href="{% url 'importar_csv' %}" class="menu-card">
+        <h3>Importar CSV</h3>
+        <p>Carga múltiples ingresos desde archivo</p>
+    </a>
+</div>
+
+{% endblock %}

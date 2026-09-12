@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Iniciar sesión</title>
+    <link rel="icon" type="image/png" href="{% static 'core/img/favicon.png' %}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            background-color: #f4f4f4;
+            color: #111;
+        }
+
+        .franja-superior {
+            background:
+                linear-gradient(rgba(0, 160, 140, 0.35), rgba(0, 160, 140, 0.35)),
+                url("{% static 'core/img/banner.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 240px;
+            width: 100%;
+            position: relative;
+        }
+
+        .encabezado {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .empresa {
+            color: white;
+            font-size: 34px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .login-superior {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 14px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+        }
+
+        .login-superior input {
+            width: 170px;
+            padding: 10px 12px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-superior button {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .login-superior button:hover {
+            background-color: #222222;
+        }
+
+        .contenedor-central {
+            position: relative;
+            margin-top: -60px;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px 40px;
+        }
+
+        .tarjeta-principal {
+            width: 100%;
+            max-width: 1200px;
+            background-color: rgba(255,255,255,0.94);
+            min-height: 420px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            padding: 40px 30px 30px;
+            position: relative;
+            backdrop-filter: blur(2px);
+        }
+
+        .logo-centro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-centro img {
+            width: 100%;
+            max-width: 450px;   
+            height: auto;
+            object-fit: contain;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .mensaje {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .mensaje h1 {
+            font-size: 38px;
+            color: #111111;
+            margin-bottom: 10px;
+        }
+
+        .mensaje p {
+            font-size: 18px;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .errorlist {
+            color: red;
+            list-style: none;
+            padding: 0;
+            margin-bottom: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .ayuda-login {
+            position: absolute;
+            right: 30px;
+            bottom: 25px;
+            font-family: Arial, sans-serif;
+            color: #333333;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .encabezado {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+
+            .login-superior {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .login-superior input,
+            .login-superior button {
+                width: 100%;
+            }
+
+            .empresa {
+                font-size: 28px;
+            }
+
+            .logo-centro img {
+                max-width: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="franja-superior">
+        <div class="encabezado">
+            <div class="empresa">
+                Horizon Recruiters
+            </div>
+
+            <form method="post" class="login-superior">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <input type="text" name="username" placeholder="Usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="contenedor-central">
+        <div class="tarjeta-principal">
+
+            <!-- 🔥 LOGO -->
+            <div class="logo-centro">
+                <img src="{% static 'core/img/logo.png' %}" alt="Logo empresa">
+            </div>
+
+            <div class="mensaje">
+                <h1>Bienvenido</h1>
+                <p>Conectamos talento con oportunidades.</p>
+            </div>
+
+            <div class="ayuda-login">
+                Acceso exclusivo para usuarios autorizados
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

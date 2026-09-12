@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Sistema{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'core/img/favicon.png' %}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f5f7;
+        }
+
+        .header {
+            background:
+                linear-gradient(rgba(0,160,140,0.78), rgba(0,160,140,0.78)),
+                url("{% static 'core/img/banner.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 24px 34px 32px 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            min-height: 120px;
+        }
+
+        .empresa {
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+
+        .usuario-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .usuario {
+            font-size: 14px;
+            background: rgba(255,255,255,0.16);
+            padding: 10px 14px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+        }
+
+        .header-botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .header-botones a {
+            text-decoration: none;
+        }
+
+        .btn-header {
+            background: rgba(255,255,255,0.18);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.35);
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn-header:hover {
+            background: rgba(255,255,255,0.28);
+        }
+
+        .contenedor {
+            padding: 30px;
+            margin-top: 10px; /* antes estaba muy arriba */
+        }
+
+        .card {
+            background: rgba(255,255,255,0.96);
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+        }
+
+        @media (max-width: 900px) {
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+
+            .usuario-panel {
+                align-items: stretch;
+            }
+
+            .header-botones {
+                justify-content: stretch;
+            }
+
+            .btn-header {
+                text-align: center;
+            }
+
+            .empresa {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="empresa">Horizon Recruiters</div>
+
+        <div class="usuario-panel">
+            <div class="usuario">
+                {{ request.user.username }}
+            </div>
+
+            <div class="header-botones">
+                {% if request.resolver_match.url_name != 'dashboard' %}
+                    <a href="{% url 'dashboard' %}" class="btn-header">Menú principal</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" class="btn-header">Cerrar sesión</a>
+           </div>
+        </div>
+    </div>
+
+    <div class="contenedor">
+        <div class="card">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>

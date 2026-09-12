@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Importar CSV{% endblock %}
+
+{% block content %}
+
+<style>
+    .contenedor-importar {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .card-importar {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        background: #0aa38f;
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #087f70;
+    }
+
+    .mensaje {
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+
+    .success {
+        background: #e8f7f3;
+        color: #0b6b61;
+    }
+
+    .error {
+        background: #fdeaea;
+        color: #a33a3a;
+    }
+
+    .ejemplo {
+        background: #f7f7f7;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-size: 14px;
+        overflow-x: auto;
+    }
+</style>
+
+<div class="contenedor-importar">
+    <h1>Importar ingresos desde CSV</h1>
+
+    <div class="card-importar">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mensaje {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Selecciona tu archivo CSV:</label>
+            <input type="file" name="archivo_csv" accept=".csv" required>
+            <button type="submit">Importar archivo</button>
+        </form>
+
+        <div class="ejemplo">
+            <strong>Formato esperado del CSV:</strong><br><br>
+            empresa,empleado,puesto,nombre_completo,curp,telefono,fecha_entrevista,fecha_ingreso,monto_estimado<br>
+            Empresa Prueba,Juan Pérez,Operador,Pedro López,PELO001122HNLXXX01,8111111111,2026-03-20,2026-03-25,1000.00
+        </div>
+    </div>
+</div>
+
+{% endblock %}

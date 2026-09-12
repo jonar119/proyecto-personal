@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+
+<style>
+    .contenedor {
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .seccion {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    p {
+        margin-bottom: 14px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background: #198754;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #157347;
+    }
+
+    .acciones {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="contenedor">
+    <div class="seccion">
+        <h1>Generar reporte PDF</h1>
+
+        <form method="get" action="{% url 'generar_pdf' %}">
+            <p>
+                <label>Fecha inicio:</label>
+                <input type="date" name="fecha_inicio" required>
+            </p>
+
+            <p>
+                <label>Fecha fin:</label>
+                <input type="date" name="fecha_fin" required>
+            </p>
+
+            <p>
+                <label>Tipo de reporte:</label>
+                <select name="tipo_reporte">
+                    <option value="general">General</option>
+                    <option value="nomina">Nómina</option>
+                    <option value="facturacion">Facturación</option>
+                </select>
+            </p>
+
+            <div class="acciones">
+                <button type="submit">Generar PDF</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
